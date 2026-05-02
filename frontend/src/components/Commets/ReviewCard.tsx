@@ -1,12 +1,15 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, Rating, Divider } from "@mui/material";
+import {Box, Card, CardContent, Typography, Rating, Divider, IconButton} from "@mui/material";
 import dayjs from "dayjs";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Props {
     review: Review;
+    isAdmin?: boolean;
+    onDelete?: (id: string) => void;
 }
 
-const ReviewCard: React.FC<Props> = ({ review }) => {
+const ReviewCard: React.FC<Props> = ({ review, onDelete, isAdmin }) => {
     return (
         <Card sx={{ mb: 2 }}>
             <CardContent>
@@ -47,6 +50,15 @@ const ReviewCard: React.FC<Props> = ({ review }) => {
                 <Typography variant="caption" color="text.secondary">
                     {dayjs(review.createdAt).format("DD.MM.YYYY")}
                 </Typography>
+
+                {isAdmin && onDelete && (
+                    <IconButton
+                        color="error"
+                        onClick={() => onDelete(review._id)}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                )}
 
             </CardContent>
         </Card>

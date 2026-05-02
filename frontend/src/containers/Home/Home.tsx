@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {getInstitutions} from "../../features/institutions/institutionsSlice.ts";
 import {selectInstitutions, selectInstitutionsLoading} from "../../features/institutions/institutionsSelector.ts";
 import {Box, LinearProgress, Typography} from "@mui/material";
-import InstitutionCard from "../../components/InstitutionCard.tsx";
+import InstitutionCard from "../../components/InstitutionCard/InstitutionCard.tsx";
 
 const Home = () => {
     const dispatch = useAppDispatch();

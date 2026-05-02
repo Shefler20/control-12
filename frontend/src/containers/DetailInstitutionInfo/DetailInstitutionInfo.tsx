@@ -33,8 +33,7 @@ import { BASE_URL } from "../../globalConst.ts";
 import FileInput from "../../UI/FileInput.tsx";
 import FormReview from "../../components/FormReview/FormReview.tsx";
 import {
-    selectReviews,
-    selectReviewsCheck,
+    selectReviews, selectReviewsCheck,
     selectReviewsLoadingSend
 } from "../../features/reviews/reviewsSelector.ts";
 import {checkUserReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice.ts";
