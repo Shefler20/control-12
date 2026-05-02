@@ -85,6 +85,7 @@ const DetailInstitutionInfo = () => {
         setImage(null);
 
         dispatch(getGalleriesByInstitution(id));
+        dispatch(getInfoByInstitution({ id }));
     };
 
     if (loading || !institution || loadingReviews) {
