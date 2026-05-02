@@ -31,13 +31,26 @@ import {
 
 import { BASE_URL } from "../../globalConst.ts";
 import FileInput from "../../UI/FileInput.tsx";
+import FormReview from "../../components/FormReview/FormReview.tsx";
+import {
+    selectReviews,
+    selectReviewsCheck,
+    selectReviewsLoadingSend
+} from "../../features/reviews/reviewsSelector.ts";
+import {checkUserReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice.ts";
+import ReviewCard from "../../components/Commets/ReviewCard.tsx";
+import {userSelector} from "../../features/users/usersSelectors.ts";
 
 const DetailInstitutionInfo = () => {
     const { id } = useParams<{ id: string }>();
+    const user = useAppSelector(userSelector);
     const dispatch = useAppDispatch();
 
     const institution = useAppSelector(selectInstitution);
     const loading = useAppSelector(selectInstitutionByIdLoading);
+    const reviewLoading = useAppSelector(selectReviewsLoadingSend);
+    const hasSeeForm = useAppSelector(selectReviewsCheck);
+    const reviews = useAppSelector(selectReviews);
 
     const galleries = useAppSelector(selectGalleries);
     const galleriesLoading = useAppSelector(selectGalleriesLoadingGet);
@@ -48,6 +61,8 @@ const DetailInstitutionInfo = () => {
         if (id) {
             dispatch(getInfoByInstitution({ id }));
             dispatch(getGalleriesByInstitution(id));
+            dispatch(checkUserReview(id));
+            dispatch(getReviewsByInstitution(id));
         }
     }, [id, dispatch]);
 
@@ -161,7 +176,7 @@ const DetailInstitutionInfo = () => {
                     </Box>
                 )}
 
-                <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                {user && <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                     <FileInput
                         name="image"
                         label="Image"
@@ -176,7 +191,19 @@ const DetailInstitutionInfo = () => {
                     >
                         Add Photo
                     </Button>
-                </Box>
+                </Box>}
+
+                <Divider sx={{ my: 3 }} />
+
+                {!hasSeeForm && user &&  <FormReview
+                    institutionId={id!}
+                    loading={reviewLoading}
+                />}
+                {reviews.length > 0 && (
+                    reviews.map((review) => (
+                        <ReviewCard key={review._id} review={review}/>
+                    ))
+                )}
             </CardContent>
         </Card>
     );

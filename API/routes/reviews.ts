@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import Review from "../models/Review";
 import auth, {RequestWithUser} from "../middleware/auth";
 import permit from "../middleware/permit";
+import jwt from "jsonwebtoken";
+import config from "../config";
+
 
 const reviewsRouter = express.Router();
 
@@ -50,23 +53,39 @@ reviewsRouter.post("/",auth, async (req, res, next) => {
     }
 });
 
-reviewsRouter.get("/check/:institutionId", auth, async (req, res, next) => {
-    const { user } = req as RequestWithUser;
+reviewsRouter.get("/check/:institutionId", async (req, res, next) => {
     const { institutionId } = req.params;
 
-    if (!institutionId || !mongoose.Types.ObjectId.isValid(institutionId as string)) {
+    if (!institutionId || !mongoose.Types.ObjectId.isValid(institutionId)) {
         return res.status(400).send({ error: "Invalid institution id" });
     }
 
     try {
-        const review = await Review.findOne({
-            user: user._id,
-            institution: institutionId
-        });
+        const token = req.cookies?.accessToken;
 
-        res.send({
-            hasReview: !!review
-        });
+        let userId: string | null = null;
+
+        if (token) {
+            try {
+                const decoded = jwt.verify(token, config.jwtSecret) as { _id: string };
+                userId = decoded._id;
+            } catch {
+                userId = null;
+            }
+        }
+
+        let hasReview = false;
+
+        if (userId) {
+            const review = await Review.findOne({
+                user: userId,
+                institution: institutionId
+            });
+
+            hasReview = !!review;
+        }
+
+        res.send({ hasReview });
 
     } catch (e) {
         next(e);

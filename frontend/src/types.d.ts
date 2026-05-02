@@ -95,3 +95,35 @@ interface GalleryMutation {
     institution: string;
     image: File | null;
 }
+
+interface Review {
+    _id: string;
+
+    user: {
+        _id: string;
+        username: string;
+        displayName: string;
+    };
+
+    institution: string;
+
+    description: string;
+
+    ratings: {
+        quality: number;
+        service: number;
+        interior: number;
+    };
+
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface ReviewMutation {
+    institution: string;
+    description: string;
+
+    quality: number;
+    service: number;
+    interior: number;
+}

@@ -3,6 +3,7 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 import {userReducer} from "../../features/users/usersSlice.ts";
 import {institutionReducer} from "../../features/institutions/institutionsSlice.ts";
 import {galleryReducer} from "../../features/galleries/galleriesSlice.ts";
+import {reviewReducer} from "../../features/reviews/reviewsSlice.ts";
 
 const userPersistConfig = {
     key: 'store:user',
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     institution: institutionReducer,
     gallery: galleryReducer,
+    review: reviewReducer,
 })
 
 export const store = configureStore({
