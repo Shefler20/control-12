@@ -54,7 +54,11 @@ institutionsRouter.get("/", async (_req, res, next) => {
 institutionsRouter.post("/", auth, imagesUpload.single("image"), async (req, res, next) => {
     const { user } = req as RequestWithUser;
     if (!req.file) return res.status(400).send({ error: "Image is required" });
-    const { title, description } = req.body;
+    const { title, description, agreeToTerms  } = req.body;
+    const isAgreed = String(agreeToTerms) === "true";
+    if (!isAgreed) {
+        return res.status(400).send({ error: "You must agree to the terms" });
+    }
     try {
         const newInstitution = new Institution({
             user: user._id,
