@@ -2,6 +2,7 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import {userReducer} from "../../features/users/usersSlice.ts";
 import {institutionReducer} from "../../features/institutions/institutionsSlice.ts";
+import {galleryReducer} from "../../features/galleries/galleriesSlice.ts";
 
 const userPersistConfig = {
     key: 'store:user',
@@ -22,6 +23,7 @@ const userPersistConfig = {
 const rootReducer = combineReducers({
     user: persistReducer(userPersistConfig, userReducer),
     institution: institutionReducer,
+    gallery: galleryReducer,
 })
 
 export const store = configureStore({

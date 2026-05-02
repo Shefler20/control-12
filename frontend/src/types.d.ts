@@ -78,3 +78,20 @@ interface InstitutionDetail {
     avgService: number;
     avgInterior: number;
 }
+
+interface GalleryItem {
+    _id: string;
+
+    institution: string;
+    user: string;
+
+    image: string;
+
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface GalleryMutation {
+    institution: string;
+    image: File | null;
+}
