@@ -39,7 +39,7 @@ interface GlobalError {
 interface InstitutionMutation {
     title: string;
     description: string;
-    image: string;
+    image:  File | null;
     agreeToTerms: boolean;
 }
 

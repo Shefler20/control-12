@@ -82,7 +82,7 @@ export const institutionsSlice = createSlice({
 export const getInstitutions = createAsyncThunk<InstitutionListItem[], void>(
     "institution/getInstitutions",
     async () => {
-        const resp = await axiosApi<InstitutionListItem[]>('/institution');
+        const resp = await axiosApi<InstitutionListItem[]>('/institutions');
         return resp.data;
     });
 
@@ -98,7 +98,7 @@ export const addInstitution = createAsyncThunk<void, InstitutionMutation, { reje
             if (dataInstitutionMutation.image) {
                 data.append("image", dataInstitutionMutation.image);
             }
-            await axiosApi.post('/institution', data);
+            await axiosApi.post('/institutions', data);
         }catch (e){
             if (isAxiosError(e) && e.response && e.response.status === 400){
                 return rejectWithValue(e.response.data as ValidationError);
@@ -110,14 +110,14 @@ export const addInstitution = createAsyncThunk<void, InstitutionMutation, { reje
 export const getInfoByInstitution = createAsyncThunk<InstitutionDetail, {id: string}>(
     "institution/getInfoByInstitution",
     async ({id}) => {
-        const resp = await axiosApi(`/institution/${id}`);
+        const resp = await axiosApi(`/institutions/${id}`);
         return resp.data;
     });
 
 export const deleteInstitution = createAsyncThunk<void, {id: string}>(
     "institution/deleteInstitution",
     async ({id}) => {
-        await axiosApi.delete(`/institution/${id}`);
+        await axiosApi.delete(`/institutions/${id}`);
     });
 
 export const institutionReducer = institutionsSlice.reducer;
