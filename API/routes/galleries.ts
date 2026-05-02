@@ -33,6 +33,9 @@ galleriesRouter.post("/",auth,imagesUpload.single("image"), async (req, res, nex
         await newPhotoGallery.save();
         res.send(newPhotoGallery);
     }catch (e) {
+        if (e instanceof mongoose.Error.ValidationError) {
+            return res.status(400).send(e);
+        }
         next(e);
     }
 });

@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import usersRouter from "./routes/users";
 import institutionsRouter from "./routes/institutions";
 import galleriesRouter from "./routes/galleries";
+import reviewsRouter from "./routes/reviews";
 
 const app = express();
 const port = 8000;
@@ -23,6 +24,7 @@ app.use(express.static("public"));
 app.use("/users", usersRouter);
 app.use("/institutions", institutionsRouter);
 app.use("/galleries", galleriesRouter);
+app.use("/reviews", reviewsRouter);
 
 const run = async () => {
     await mongoose.connect(config.db);
