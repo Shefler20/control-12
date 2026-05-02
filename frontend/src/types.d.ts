@@ -1,0 +1,37 @@
+interface RegisterMutation {
+    username: string;
+    password: string;
+    avatar: File | null;
+    displayName: string;
+}
+
+interface LoginMutation {
+    username: string;
+    password: string;
+}
+
+interface User {
+    _id: string;
+    username: string;
+    token: string;
+    role: string;
+    googleID?: string;
+    avatar?: string;
+    displayName: string;
+}
+
+interface ValidationError {
+    errors: {
+        [key: string]: {
+            name: string;
+            message: string;
+        }
+    },
+    message: string;
+    name: string;
+    _message: string;
+}
+
+interface GlobalError {
+    error: string;
+}
