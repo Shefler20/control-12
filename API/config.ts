@@ -5,7 +5,7 @@ const rootPath = __dirname;
 const config = {
     rootPath,
     publicPath: path.join(rootPath, "public"),
-    db: "mongodb://localhost/music-api-js30",
+    db: "mongodb://localhost/control-12-api-js30",
     jwtSecret: process.env.JWT_SECRET || 'secret',
     refreshSecret: process.env.REFRESH_SECRET || 'secret',
     clientID: process.env.CLIENT_ID || '...',

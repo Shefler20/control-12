@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import config from "./config";
 import cookieParser from "cookie-parser";
 import usersRouter from "./routes/users";
+import institutionsRouter from "./routes/institutions";
 
 const app = express();
 const port = 8000;
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 app.use("/users", usersRouter);
+app.use("/institutions", institutionsRouter);
 
 const run = async () => {
     await mongoose.connect(config.db);
