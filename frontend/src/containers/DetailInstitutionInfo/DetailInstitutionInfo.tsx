@@ -33,7 +33,7 @@ import { BASE_URL } from "../../globalConst.ts";
 import FileInput from "../../UI/FileInput.tsx";
 import FormReview from "../../components/FormReview/FormReview.tsx";
 import {
-    selectReviews, selectReviewsCheck,
+    selectReviews, selectReviewsCheck, selectReviewsLoadingGet,
     selectReviewsLoadingSend
 } from "../../features/reviews/reviewsSelector.ts";
 import {checkUserReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice.ts";
@@ -50,6 +50,7 @@ const DetailInstitutionInfo = () => {
     const reviewLoading = useAppSelector(selectReviewsLoadingSend);
     const hasSeeForm = useAppSelector(selectReviewsCheck);
     const reviews = useAppSelector(selectReviews);
+    const loadingReviews = useAppSelector(selectReviewsLoadingGet);
 
     const galleries = useAppSelector(selectGalleries);
     const galleriesLoading = useAppSelector(selectGalleriesLoadingGet);
@@ -85,7 +86,7 @@ const DetailInstitutionInfo = () => {
         dispatch(getGalleriesByInstitution(id));
     };
 
-    if (loading || !institution) {
+    if (loading || !institution || loadingReviews) {
         return (
             <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
                 <CircularProgress />
@@ -198,6 +199,7 @@ const DetailInstitutionInfo = () => {
                     institutionId={id!}
                     loading={reviewLoading}
                 />}
+                {!loadingReviews && reviews.length === 0 && <Typography variant="h6" sx={{mt:3, textAlign: "center"}}>No Review yet</Typography>}
                 {reviews.length > 0 && (
                     reviews.map((review) => (
                         <ReviewCard key={review._id} review={review}/>
