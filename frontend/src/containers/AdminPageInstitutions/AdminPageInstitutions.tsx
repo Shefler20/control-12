@@ -1,6 +1,10 @@
 import {Box, LinearProgress, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectInstitutions, selectInstitutionsLoading} from "../../features/institutions/institutionsSelector.ts";
+import {
+    selectInstitutionDeleteLoading,
+    selectInstitutions,
+    selectInstitutionsLoading
+} from "../../features/institutions/institutionsSelector.ts";
 import {useEffect} from "react";
 import {deleteInstitution, getInstitutions} from "../../features/institutions/institutionsSlice.ts";
 import AdminCardInstitution from "../../components/AdminCardInsitution/AdminCardInsitution.tsx";
@@ -11,6 +15,7 @@ const AdminPageInstitutions = () => {
     const dispatch = useAppDispatch();
     const institutions = useAppSelector(selectInstitutions);
     const loadingGetInstitutions = useAppSelector(selectInstitutionsLoading);
+    const loadingDeleteInstitution = useAppSelector(selectInstitutionDeleteLoading);
 
     useEffect(() => {
         dispatch(getInstitutions());
@@ -22,7 +27,7 @@ const AdminPageInstitutions = () => {
     }
     return (
         <>
-            {loadingGetInstitutions && <LinearProgress/>}
+            {loadingGetInstitutions || loadingDeleteInstitution && <LinearProgress/>}
             {!loadingGetInstitutions && institutions.length === 0 && <Typography variant="h6" sx={{mt:3, textAlign: "center"}}>No Institutions yet</Typography>}
             {institutions.length > 0 && (
                 <Box
