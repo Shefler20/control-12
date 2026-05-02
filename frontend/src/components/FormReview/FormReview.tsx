@@ -3,6 +3,7 @@ import { Box, Button, TextField, Typography, Rating, CircularProgress } from "@m
 import { useAppDispatch } from "../../app/hooks";
 import {checkUserReview, createReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice";
 import { z } from "zod";
+import {getInfoByInstitution} from "../../features/institutions/institutionsSlice.ts";
 
 export const reviewSchema = z.object({
     description: z
@@ -70,8 +71,9 @@ const FormReview: React.FC<Props> = ({ institutionId, loading }) => {
         setErrors({});
 
         await dispatch(createReview(form)).unwrap();
-        dispatch(checkUserReview(institutionId));
-        dispatch(getReviewsByInstitution(institutionId));
+        await dispatch(getInfoByInstitution({ id: institutionId }));
+        await dispatch(checkUserReview(institutionId));
+        await dispatch(getReviewsByInstitution(institutionId));
 
         setForm({
             institution: institutionId,
