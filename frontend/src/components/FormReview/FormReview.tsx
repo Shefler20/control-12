@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, TextField, Typography, Rating, CircularProgress } from "@mui/material";
 import { useAppDispatch } from "../../app/hooks";
-import {createReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice";
+import {checkUserReview, createReview, getReviewsByInstitution} from "../../features/reviews/reviewsSlice";
 import { z } from "zod";
 
 export const reviewSchema = z.object({
@@ -70,6 +70,7 @@ const FormReview: React.FC<Props> = ({ institutionId, loading }) => {
         setErrors({});
 
         await dispatch(createReview(form)).unwrap();
+        dispatch(checkUserReview(institutionId));
         dispatch(getReviewsByInstitution(institutionId));
 
         setForm({
