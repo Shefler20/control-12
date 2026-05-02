@@ -26,7 +26,7 @@ import {
 
 import {
     selectGalleries,
-    selectGalleriesLoadingGet
+    selectGalleriesLoadingGet, selectGalleriesLoadingSend
 } from "../../features/galleries/galleriesSelectors.ts";
 
 import { BASE_URL } from "../../globalConst.ts";
@@ -51,6 +51,7 @@ const DetailInstitutionInfo = () => {
     const hasSeeForm = useAppSelector(selectReviewsCheck);
     const reviews = useAppSelector(selectReviews);
     const loadingReviews = useAppSelector(selectReviewsLoadingGet);
+    const loadingSendPhoto = useAppSelector(selectGalleriesLoadingSend);
 
     const galleries = useAppSelector(selectGalleries);
     const galleriesLoading = useAppSelector(selectGalleriesLoadingGet);
@@ -189,7 +190,7 @@ const DetailInstitutionInfo = () => {
                         onClick={addPhotoHandler}
                         disabled={!image}
                     >
-                        Add Photo
+                        {loadingSendPhoto ? <CircularProgress /> : "Add Photo"}
                     </Button>
                 </Box>}
 
